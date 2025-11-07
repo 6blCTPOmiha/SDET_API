@@ -7,6 +7,6 @@ class AdditionModelRequest(BaseModel):
 
 
 class AdditionModelResponse(BaseModel):
+    id: int
     additional_info: str
     additional_number: int
-    id: int
