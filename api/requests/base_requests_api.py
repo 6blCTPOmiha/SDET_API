@@ -12,19 +12,19 @@ class BaseApi:
         self.user_id = None
         self.body = None
 
-    def request_get(self, url: str, **kwargs: dict) -> Response:
-        return requests.get(url, headers=self.headers, **kwargs)
+    @staticmethod
+    def request_get(url: str) -> Response:
+        return requests.get(url)
 
-    def request_post(self, url: str, **kwargs: dict) -> Response:
-        return requests.post(url, headers=self.headers, **kwargs)
+    @staticmethod
+    def request_post(url: str, json_req, **kwargs: dict) -> Response:
+        return requests.post(url, json=json_req, timeout=10, **kwargs)
 
     def request_put(self, url: str, **kwargs: dict) -> Response:
         return requests.put(url, headers=self.headers, **kwargs)
 
     def request_delete(self, url: str, **kwargs: dict) -> Response:
         return requests.delete(url, headers=self.headers, **kwargs)
-
-
 
     @allure.step("Проверка формата JSON")
     def json_check(self, json_data):
