@@ -16,6 +16,11 @@ class ChecksApi:
         assert obj_id > 0, "Объект не создался"
 
     @staticmethod
+    @allure.step('Проверка. Объект удалён')
+    def check_entity_deleted(obj_id):
+        assert obj_id == 204, "Объект не удалился"
+
+    @staticmethod
     @allure.step('Проверка. Заголовок 3 сущности верный')
     def check_title_is_right(title):
         assert title == "Заголовок сущности", "Заголовок не верный"
