@@ -26,10 +26,6 @@ class BaseApi:
     def request_delete(self, url: str, **kwargs: dict) -> Response:
         return requests.delete(url, headers=self.headers, **kwargs)
 
-    @allure.step("Проверка формата JSON")
-    def json_check(self, json_data):
-        try:
-            json.loads(str(json_data).replace("'", '"'))
-        except ValueError as err:
-            return False
-        return True
+    @staticmethod
+    def request_patch(url: str, json_req, **kwargs: dict) -> Response:
+        return requests.patch(url, json=json_req, timeout=10, **kwargs)
