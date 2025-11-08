@@ -58,24 +58,8 @@ class ApiHelper(BaseApi):
             ids.append(ch.id)
         return ids
 
-
-    @allure.step("Создание каталога")
-    def dir_create(self, path):
-        req_path = f'{URL}?path={path}'
-        response = self.request_put(req_path)
-        self.msg_response_code(response, path=path)
-        assert response.status_code == 201, "Directory not created!"
-
-    @allure.step("Удаление каталога")
-    def dir_delete(self, path):
-        req_path = f'{URL}?path={path}'
-        response = self.request_put(req_path)
-        self.msg_response_code(response, path=path)
-        assert response.status_code == 201, "Directory not created!"
-
-    @allure.step("Сканирование каталога")
-    def dir_create(self, path):
-        req_path = f'{URL}?path={path}'
-        response = self.request_put(req_path)
-        self.msg_response_code(response, path=path)
-        assert response.status_code == 201, "Directory not created!"
+    def delete_by_id(self, element_id: int):
+        url_id = f'{URL_DELETE}/{element_id}'
+        response = self.request_delete(url_id)
+        response.raise_for_status()
+        return response
