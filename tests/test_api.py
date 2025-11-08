@@ -26,7 +26,9 @@ class TestCustomAPI:
     @pytest.mark.delete
     def test_delete(self):
         test_obj = ApiHelper()
-        test_obj.request_get('http://127.0.0.1:8003')
+        del_obj_id = test_obj.delete_by_id(15)
+        ChecksApi.check_entity_deleted(del_obj_id.status_code)
+
 
 
     @allure.title('Проверка получения сущности по id')
