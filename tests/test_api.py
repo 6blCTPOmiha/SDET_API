@@ -2,40 +2,41 @@ import allure
 import pytest
 from helpers.api_helper import ApiHelper
 from checks.cheks_api import ChecksApi
+from data.data_ids import DEL_ID, GET_ID, PATCH_ID
 
 
 class TestCustomAPI:
-    @allure.title('Прикол')
-    @pytest.mark.hz(reason="Test for myself")
-    def test_working(self):
-        test_obj = ApiHelper()
-        #  test_obj.request_get('http://localhost:8003/api/_/docs/swagger/index.html#')
-        #  ids = test_obj.get_ids_msg_response()
-        #  title = test_obj.get_msg_response_by_id(3)
-
-
     @allure.title('Проверка создания сущности')
     @pytest.mark.create
     def test_create(self):
+        obj = ApiHelper()
+        results_count_before = len(obj.get_msgs_response())
+        obj.create_model_request()
+        results_count_after = len(obj.get_msgs_response())
+        ChecksApi.check_new_1_entity_created(results_count_before, results_count_after)
+
+
+    @allure.title('Проверка удаления сущности по id')
+    @pytest.mark.delete_id
+    def test_delete_id(self):
         test_obj = ApiHelper()
-        new_obj_id = test_obj.create_model_request()
-        ChecksApi.check_entity_created(new_obj_id)
+        resp = test_obj.delete_by_id(DEL_ID)
+        ChecksApi.check_entity_deleted(resp.status_code)
 
 
-    @allure.title('Проверка удаления сущности')
-    @pytest.mark.delete
-    def test_delete(self):
+    @allure.title('Проверка удаления сущности по id')
+    @pytest.mark.delete_last
+    def test_delete_last(self):
         test_obj = ApiHelper()
-        del_obj_id = test_obj.delete_by_id(15)
-        ChecksApi.check_entity_deleted(del_obj_id.status_code)
-
+        resp = test_obj.delete_last_entity()
+        ChecksApi.check_entity_deleted(resp.status_code)
 
 
     @allure.title('Проверка получения сущности по id')
     @pytest.mark.get_by_id
     def test_get_by_id(self):
         test_obj = ApiHelper()
-        title = test_obj.get_msg_response_by_id(3)
+        title = test_obj.get_msg_response_by_id(GET_ID)
         ChecksApi.check_title_is_right(title)
 
 
@@ -43,7 +44,7 @@ class TestCustomAPI:
     @pytest.mark.get_all
     def test_get_all(self):
         test_obj = ApiHelper()
-        ids = test_obj.get_ids_msg_response()
+        ids = test_obj.get_ids_msgs_response()
         ChecksApi.check_count_of_entities(ids)
 
 
@@ -51,4 +52,5 @@ class TestCustomAPI:
     @pytest.mark.patch
     def test_patch(self):
         test_obj = ApiHelper()
-        test_obj.request_get('http://127.0.0.1:8003')
+        resp = test_obj.patch_by_id(PATCH_ID)
+        ChecksApi.check_entity_patched(resp.status_code)
