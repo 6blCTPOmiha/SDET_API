@@ -17,13 +17,6 @@ class ApiHelper(BaseApi):
         response.raise_for_status()
         return response
 
-
-    def get_msg_response_by_id(self, element_id: int):
-        url_id = f'{URL_GET}/{element_id}'
-        response_text = self.request_get(url_id).text
-        response_ch = ConvertHelper.deserialize_response(response_text)
-        return response_ch.title
-
     def get_msg_response_by_last_id(self):
         ids = self.get_ids_msgs_response()
         url_id = f'{URL_GET}/{ids[-1]}'
@@ -58,13 +51,6 @@ class ApiHelper(BaseApi):
         ids = self.get_ids_msgs_response()
         url_id = f'{URL_DELETE}/{ids[-1]}'
         response = self.request_delete(url_id)
-        response.raise_for_status()
-        return response
-
-    def patch_by_id(self, element_id: int):
-        url = f'{URL_PATCH}/{element_id}'
-        payload = EMREQ0.model_dump()
-        response = self.request_patch(url, json_req=payload)
         response.raise_for_status()
         return response
 
