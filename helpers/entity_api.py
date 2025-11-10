@@ -1,32 +1,30 @@
-import allure
 from api.requests.base_requests_api import BaseApi
-from data.data_api import URL_CREATE, URL_DELETE, URL_GET, URL_GET_ALL, URL_PATCH
-from data.data_objs import EMREQ0
+from config import Config
 from helpers.convert_helper import ConvertHelper
 
 
-
-class ApiHelper(BaseApi):
+class EntityApi(BaseApi):
     def __init__(self):
         super().__init__()
+        self.base_url = Config.BASE_URL
 
-    def create_model_request(self):
-        url = URL_CREATE
-        payload = EMREQ0.model_dump()
+    def create_model_request(self, base_model):
+        url = f'{self.base_url}/create'
+        payload = base_model.model_dump()
         response = self.request_post(url, json_req=payload)
         response.raise_for_status()
         return response
 
     def get_msg_response_by_last_id(self):
         ids = self.get_ids_msgs_response()
-        url_id = f'{URL_GET}/{ids[-1]}'
+        url_id = f'{self.base_url}/get/{ids[-1]}'
         response = self.request_get(url_id)
         response_text = response.text
         response_ch = ConvertHelper.deserialize_response(response_text)
         return response.status_code, response_ch.title
 
     def get_ids_msgs_response(self):
-        url = URL_GET_ALL
+        url = f'{self.base_url}/getAll'
         response_text = self.request_get(url).text
         response_chs = ConvertHelper.deserialize_responses(response_text)
         ids = []
@@ -35,35 +33,29 @@ class ApiHelper(BaseApi):
         return ids
 
     def get_msgs_response(self):
-        url = URL_GET_ALL
+        url = f'{self.base_url}/getAll'
         response = self.request_get(url)
         response_text = self.request_get(url).text
         response_chs = ConvertHelper.deserialize_responses(response_text)
         return response.status_code, response_chs
 
     def delete_by_id(self, element_id: int):
-        url_id = f'{URL_DELETE}/{element_id}'
+        url_id = f'{self.base_url}/delete/{element_id}'
         response = self.request_delete(url_id)
         response.raise_for_status()
         return response
 
     def delete_last_entity(self):
         ids = self.get_ids_msgs_response()
-        url_id = f'{URL_DELETE}/{ids[-1]}'
+        url_id = f'{self.base_url}/delete/{ids[-1]}'
         response = self.request_delete(url_id)
         response.raise_for_status()
         return response
 
-    def patch_by_last_id(self):
+    def patch_by_last_id(self, base_model):
         ids = self.get_ids_msgs_response()
-        url = f'{URL_PATCH}/{ids[-1]}'
-        payload = EMREQ0.model_dump()
+        url = f'{self.base_url}/patch/{ids[-1]}'
+        payload = base_model.model_dump()
         response = self.request_patch(url, json_req=payload)
         response.raise_for_status()
         return response.status_code
-
-    def clear_db(self):
-        ids = self.get_ids_msgs_response()
-        for ent_id in ids:
-            self.delete_by_id(ent_id)
-        return 'OK'
