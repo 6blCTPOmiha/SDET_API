@@ -1,6 +1,0 @@
-URL = 'http://localhost:8003/api/_/docs/swagger/index.html#/'
-URL_CREATE = 'http://localhost:8003/api/create'
-URL_DELETE = 'http://localhost:8003/api/delete'
-URL_GET = 'http://localhost:8003/api/get'
-URL_GET_ALL = 'http://localhost:8003/api/getAll'
-URL_PATCH = 'http://localhost:8003/api/patch'
