@@ -1,7 +1,7 @@
 import allure
 
 
-class ChecksApi:
+class AssertionsApi:
     def __init__(self, driver):
         super().__init__(driver)
 
