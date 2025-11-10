@@ -40,10 +40,15 @@ class EntityApi(BaseApi):
         return response.status_code, response_chs
 
     def delete_by_id(self, element_id: int):
-        url_id = f'{self.base_url}/delete/{element_id}'
-        response = self.request_delete(url_id)
-        response.raise_for_status()
-        return response
+        ids = self.get_ids_msgs_response()
+        if element_id in ids:
+            url_id = f'{self.base_url}/delete/{element_id}'
+            response = self.request_delete(url_id)
+            response.raise_for_status()
+            return response
+        else:
+            print(f'Ошибка! Сущность с {element_id} id отсутствует в БД ')
+            raise
 
     def delete_last_entity(self):
         ids = self.get_ids_msgs_response()
@@ -59,3 +64,27 @@ class EntityApi(BaseApi):
         response = self.request_patch(url, json_req=payload)
         response.raise_for_status()
         return response.status_code
+
+    def get_msg_response_by_id(self, element_id: int):
+        ids = self.get_ids_msgs_response()
+        if element_id in ids:
+            url_id = f'{self.base_url}/get/{ids[-1]}'
+            response = self.request_get(url_id)
+            response_text = response.text
+            response_ch = ConvertHelper.deserialize_response(response_text)
+            return response.status_code, response_ch.title
+        else:
+            print(f'Ошибка! Сущность с {element_id} id отсутствует в БД ')
+            raise
+
+    def patch_by_id(self, base_model, element_id: int):
+        ids = self.get_ids_msgs_response()
+        if element_id in ids:
+            url = f'{self.base_url}/patch/{ids[-1]}'
+            payload = base_model.model_dump()
+            response = self.request_patch(url, json_req=payload)
+            response.raise_for_status()
+            return response.status_code
+        else:
+            print(f'Ошибка! Сущность с {element_id} id отсутствует в БД ')
+            raise
