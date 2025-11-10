@@ -8,13 +8,13 @@ additional_numbers = [111, 222, 333, 444, 555, 666, 777, 888, 999]
 important_numbers = [[123, 132, 134], [223, 232, 234], [323, 332, 334], [423, 432, 434], [523, 532, 534], [623, 632, 634], [723, 732, 734], [823, 832, 834], [923, 932, 934]]
 
 AMREQ0 = AdditionModelRequest(
-    additional_info=additional_infos[7],
-    additional_number=additional_numbers[2],
+    additional_info=additional_infos[0],
+    additional_number=additional_numbers[0],
 )
 
 EMREQ0 = EntityModelRequest(
-    title=titles[2],
+    title=titles[0],
     verified=verifieds[0],
     addition=AMREQ0,
-    important_numbers=important_numbers[6]
+    important_numbers=important_numbers[0]
 )
