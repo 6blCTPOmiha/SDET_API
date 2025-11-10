@@ -12,12 +12,8 @@ class ConvertHelper:
             json_data = json.loads(response_text)
             entity = EntityModelResponse(**json_data)
             return entity
-
-        except json.JSONDecodeError as e:
-            print(f"Ошибка парсинга JSON: {e}")
-            raise
         except Exception as e:
-            print(f"Ошибка валидации: {e}")
+            print(f"Ошибка: {e}")
             raise
 
     @staticmethod
@@ -28,10 +24,6 @@ class ConvertHelper:
             entities_data = json_data["entity"]
             entities = [EntityModelResponse(**entity_data) for entity_data in entities_data]
             return entities
-
-        except json.JSONDecodeError as e:
-            print(f"Ошибка парсинга JSON: {e}")
-            raise
         except Exception as e:
-            print(f"Ошибка валидации: {e}")
+            print(f"Ошибка: {e}")
             raise
