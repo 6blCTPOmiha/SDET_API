@@ -1,3 +1,0 @@
-DEL_ID = 17
-GET_ID = 2
-PATCH_ID = 3
