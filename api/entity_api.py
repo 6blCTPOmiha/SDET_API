@@ -1,4 +1,4 @@
-from api.requests.base_requests_api import BaseApi
+from api.base_api import BaseApi
 from config import Config
 from helpers.convert_helper import ConvertHelper
 
