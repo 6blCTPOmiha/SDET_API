@@ -32,7 +32,6 @@ class EntityApi(BaseApi):
         return response.status_code, response_chs
 
     def delete_by_id(self, element_id: int):
-        # ids = self.get_ids_msgs_response()
         try:
             url_id = f'{self.base_url}/delete/{element_id}'
             response = self.request_delete(url_id)
