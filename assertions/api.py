@@ -6,13 +6,8 @@ class AssertionsApi:
         super().__init__(driver)
 
     @staticmethod
-    @allure.step('Проверка. id Созданного объекта вернулся')
-    def check_create_resp_id(resp_id):
-        assert resp_id != 0, "Объект не создался"
-
-    @staticmethod
     @allure.step('Проверка. Заголовок у сущности присутствует')
-    def check_title_is_right(title):
+    def check_title_exists(title):
         assert title != "", "Заголовок отсутствует"
 
     @staticmethod
