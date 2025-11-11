@@ -9,7 +9,7 @@ class BaseApi:
         if req.status_code == 200:
             return req
         else:
-            print(f"Ошибка! Получен код: {req.status_code}")
+            print(f"\nОшибка! Получен код: {req.status_code}")
             raise
 
     @staticmethod
@@ -18,7 +18,7 @@ class BaseApi:
         if req.status_code == 200:
             return req
         else:
-            print(f"Ошибка! Получен код: {req.status_code}")
+            print(f"\nОшибка! Получен код: {req.status_code}")
             raise
 
     @staticmethod
@@ -27,7 +27,7 @@ class BaseApi:
         if req.status_code == 204:
             return req
         else:
-            print(f"Ошибка! Получен код: {req.status_code}")
+            print(f"\nОшибка! Получен код: {req.status_code}")
             raise
 
     @staticmethod
@@ -36,5 +36,5 @@ class BaseApi:
         if req.status_code == 204:
             return req
         else:
-            print(f"Ошибка! Получен код: {req.status_code}")
+            print(f"\nОшибка! Получен код: {req.status_code}")
             raise

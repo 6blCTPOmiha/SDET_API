@@ -13,7 +13,7 @@ class ConvertHelper:
             entity = EntityModelResponse(**json_data)
             return entity
         except Exception as e:
-            print(f"Ошибка: {e}")
+            print(f"\nОшибка: {e}")
             raise
 
     @staticmethod
@@ -25,5 +25,5 @@ class ConvertHelper:
             entities = [EntityModelResponse(**entity_data) for entity_data in entities_data]
             return entities
         except Exception as e:
-            print(f"Ошибка: {e}")
+            print(f"\nОшибка: {e}")
             raise
